@@ -1,5 +1,6 @@
 {
-  "name": "phone-book",
+  "homepage": "https://robd01.github.io/Full-Stack-Open/",
+  "name": "Full Stack Open",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
