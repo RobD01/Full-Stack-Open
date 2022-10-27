@@ -2,7 +2,6 @@ import React from "react";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navigation from "../Components/Navbar";
-import { BrowserRouter as Router, Link } from "react-router-dom";
 
 const Home = () => {
   // Portfolio links
@@ -33,10 +32,10 @@ const Home = () => {
 
       {/* Portfolio links */}
       <div className="my-2 d-flex justify-content-center">
-        <a href={github} target="_blank">
+        <a href={github} target="_blank" rel="noreferrer">
           <img src={githubIcon} alt="Github" height="100" />
         </a>
-        <a href={youtube} target="_blank">
+        <a href={youtube} target="_blank" rel="noreferrer">
           <img src={youtubeIcon} alt="Youtube" height="100" />
         </a>
       </div>
