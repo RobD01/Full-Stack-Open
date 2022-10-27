@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import CourseList from "./Pages/CourseList";
 import Phonebook from "./Pages/Phonebook";
@@ -7,7 +7,7 @@ import Home from "./Pages/Home";
 
 const App = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Routes>
         <Route path="/">
           <Route index element={<Home />} />
