@@ -7,9 +7,9 @@ import Home from "./Pages/Home";
 
 const App = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={window.location.pathname || ""}>
       <Routes>
-        <Route path="/Full-Stack-Open/">
+        <Route path="/">
           <Route index element={<Home />} />
           <Route path="phonebook" element={<Phonebook />} />
           <Route path="courselist" element={<CourseList />} />
