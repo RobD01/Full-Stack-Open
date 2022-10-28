@@ -1,13 +1,13 @@
 import React from "react";
 
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import CourseList from "./Pages/CourseList";
 import Phonebook from "./Pages/Phonebook";
 import Home from "./Pages/Home";
 
 const App = () => {
   return (
-    <BrowserRouter basename={window.location.pathname || ""}>
+    <HashRouter>
       <Routes>
         <Route path="/">
           <Route index element={<Home />} />
@@ -15,7 +15,7 @@ const App = () => {
           <Route path="courselist" element={<CourseList />} />
         </Route>
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 };
 
