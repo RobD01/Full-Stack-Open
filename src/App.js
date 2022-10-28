@@ -9,7 +9,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/">
+        <Route path="/Full-Stack-Open/">
           <Route index element={<Home />} />
           <Route path="phonebook" element={<Phonebook />} />
           <Route path="courselist" element={<CourseList />} />
