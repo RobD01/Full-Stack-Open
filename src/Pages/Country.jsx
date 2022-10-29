@@ -27,7 +27,7 @@ const Country = () => {
     promise.then(eventHandler);
   }, []);
 
-  // Frontend
+  // Frontend . Search bar, result table
 
   const handleSearch = (event) => {
     setSearch(event.target.value.toLowerCase());
@@ -37,16 +37,22 @@ const Country = () => {
     setShow(!show);
   };
 
-  const datashow = show ? "d-block" : "d-none";
-
   const filter = data.filter((data) =>
     data.name.common.toLowerCase().includes(search)
   );
+
+  // Country Specific Data
+  const datashow = show ? "d-block" : "d-none";
 
   const buttonHide = filter.length === 1 ? "d-block" : "d-none";
 
   const dataHide = show && filter.length === 1 ? "d-block" : "d-none";
 
+  const capital = filter.length === 1 ? filter[0].capital : "";
+
+  const flag = filter.length === 1 ? filter[0].flags.png : "";
+
+  // Render data
   const render = filter.map((data) => (
     <tr key={data.name.common}>
       <td> {data.name.common}</td>
@@ -100,8 +106,8 @@ const Country = () => {
 
         <div className={dataHide}>
           <h2>Country Data</h2>
-          <p>Capital: {filter[0].capital}</p>
-          <img src={filter[0].flags.png} alt="Flag" />
+          <p>Capital: {capital}</p>
+          <img src={flag} alt="Flag" />
         </div>
       </div>
     </>
