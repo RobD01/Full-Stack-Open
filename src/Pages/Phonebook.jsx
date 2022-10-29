@@ -1,16 +1,35 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navigation from "../Components/Navbar";
+import axios from "axios";
 
 const Phonebook = () => {
+  // States
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [newPhone, setNewPhone] = useState("");
   const [search, setSearch] = useState("");
 
+  // Backend
+
+  const apiurl = "http://localhost:3001/persons";
+
+  useEffect(() => {
+    console.log("effect");
+
+    const eventHandler = (response) => {
+      console.log("promise fulfilled");
+      setPersons(response.data);
+    };
+
+    const promise = axios.get(apiurl);
+    promise.then(eventHandler);
+  }, []);
+
+  // Frontend
   const handleName = (event) => {
     setNewName(event.target.value);
   };
@@ -20,10 +39,12 @@ const Phonebook = () => {
   };
 
   const handleSearch = (event) => {
-    setSearch(event.target.value);
+    setSearch(event.target.value.toLowerCase());
   };
 
-  const filter = persons.filter((person) => person.name.includes(search));
+  const filter = persons.filter((person) =>
+    person.name.toLowerCase().includes(search)
+  );
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -55,7 +76,10 @@ const Phonebook = () => {
       <h2 className="text-center">Phonebook App</h2>
       <div className="mt-5 bg-info p-3 text-white">
         <p>Function: uses a form to save names and phone numbers to a list</p>
-        <p>Concepts: Usestate, event handler, array filter, bootstrap, table</p>
+        <p>
+          Concepts: useState, useEffect, server response, event handler, array
+          filter, bootstrap, table,{" "}
+        </p>
       </div>
 
       <Form className="my-5">
@@ -108,7 +132,7 @@ const Phonebook = () => {
         </div>
       </Form>
       <h2>Phone Book</h2>
-      <table class="table">
+      <table className="table">
         <thead>
           <tr>
             <th scope="col">Name</th>

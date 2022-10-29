@@ -16,6 +16,7 @@ const Navigation = () => {
               Course List
             </Nav.Link>
             <Nav.Link href="/Full-Stack-Open/#/phonebook">Phone Book</Nav.Link>
+            <Nav.Link href="/Full-Stack-Open/#/country">Country</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

@@ -4,6 +4,7 @@ import { HashRouter, Routes, Route } from "react-router-dom";
 import CourseList from "./Pages/CourseList";
 import Phonebook from "./Pages/Phonebook";
 import Home from "./Pages/Home";
+import Country from "./Pages/Country";
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
           <Route index element={<Home />} />
           <Route path="phonebook" element={<Phonebook />} />
           <Route path="courselist" element={<CourseList />} />
+          <Route path="country" element={<Country />} />
         </Route>
       </Routes>
     </HashRouter>
