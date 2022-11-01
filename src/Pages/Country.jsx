@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navigation from "../Components/Navbar";
 import axios from "axios";
+import InfoToggle from "../Components/InfoToggle";
 
 const Country = () => {
   // States
@@ -69,17 +70,13 @@ const Country = () => {
       <div className="container">
         <Navigation />
         <h2 className="text-center">Country App</h2>
-        <div className="mt-5 bg-info p-3 text-white">
-          <p>
-            Function: uses a form find a country from the API database. If you
+        <InfoToggle
+          function="uses a form find a country from the API database. If you
             narrow the search results to 1 country, a button appears to View
-            Data. Clicking button outputs the country data.
-          </p>
-          <p>
-            Concepts: useState, useEffect, server response, event handler, array
-            filter, bootstrap, table
-          </p>
-        </div>
+            Data. Clicking button outputs the country data"
+          concept="useState, useEffect, server response, event handler, array
+            filter, bootstrap, table"
+        />
 
         <Form className="my-5">
           <h5>Search by Name</h5>

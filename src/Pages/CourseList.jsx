@@ -1,4 +1,5 @@
 import React from "react";
+import InfoToggle from "../Components/InfoToggle";
 import Navigation from "../Components/Navbar";
 
 const Course = ({ name, parts }) => (
@@ -81,15 +82,12 @@ const CourseList = () => {
       <div className="container">
         <Navigation />
         <h2 className="text-center">Course List</h2>
-        <div className="my-5 bg-info p-3 text-white">
-          <p>
-            Function: Extract properties from JSON objects, outputs into a list
-          </p>
-          <p>
-            Concepts: React component & props, JSON navigation, array map
-            method, bootstrap
-          </p>
-        </div>
+        <InfoToggle
+          function="Extract properties from JSON objects, outputs into a list"
+          concept="React component & props, JSON navigation, array map
+            method, bootstrap"
+        />
+
         {final}
       </div>
     </>

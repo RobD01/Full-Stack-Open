@@ -26,7 +26,7 @@ const Home = () => {
       <h2 className="text-center">Home</h2>
 
       {/* Intro */}
-      <div className="my-4 bg-info p-3 text-white text-center">
+      <div className="my-4 bg-dark p-3 text-white text-center">
         <p>
           Here are practice projects for learning the MERN stack, full-stack Web
           Development
