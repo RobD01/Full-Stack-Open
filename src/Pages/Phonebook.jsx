@@ -48,20 +48,19 @@ const Phonebook = () => {
         return person.id !== id;
       })
     );
-    console.log("deleted", id, name);
-    console.log(persons);
   };
 
-  const handleUpdate = (id, name) => {
-    update(id);
-    const updatePerson =
-      // setPersons(
-      //   persons.filter((person) => {
-      //     return person.id !== id;
-      //   })
-      // );
-      console.log("updated", id, name);
-    console.log(persons);
+  const handleUpdate = (id) => {
+    const personObject = {
+      name: newName,
+      phone: newPhone,
+    };
+
+    update(id, personObject);
+
+    getAll().then((initialPersons) => {
+      setPersons(initialPersons);
+    });
   };
 
   // Frontend
@@ -94,6 +93,11 @@ const Phonebook = () => {
     <tr key={person.name}>
       <td> {person.name}</td>
       <td> {person.phone}</td>
+      <td>
+        <Button variant="secondary" onClick={(e) => handleUpdate(person.id, e)}>
+          Update
+        </Button>
+      </td>
       <td>
         <Button
           variant="danger"
