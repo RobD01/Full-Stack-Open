@@ -6,6 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Navigation from "../Components/Navbar";
 import { getAll, create, update, deleteItem } from "../services/phonebook.js";
 import InfoToggle from "../Components/InfoToggle";
+import { phonebookUrl } from "../services/url";
 
 const Phonebook = () => {
   // States
@@ -16,7 +17,7 @@ const Phonebook = () => {
 
   // Backend
 
-  const apiurl = "http://localhost:3001/persons";
+  const apiurl = phonebookUrl;
 
   useEffect(() => {
     getAll().then((initialPersons) => {
@@ -30,7 +31,7 @@ const Phonebook = () => {
 
     const personObject = {
       name: newName,
-      phone: newPhone,
+      number: newPhone,
     };
 
     create(personObject).then((returnedPerson) => {
@@ -38,6 +39,8 @@ const Phonebook = () => {
       setNewName("");
       setNewPhone("");
     });
+
+    console.log(persons);
   };
 
   // Delete request on backend, and delete name from frontend table
@@ -50,17 +53,26 @@ const Phonebook = () => {
     );
   };
 
+  // Put request on backend, and update name from frontend table
   const handleUpdate = (id) => {
     const personObject = {
       name: newName,
-      phone: newPhone,
+      number: newPhone,
     };
 
     update(id, personObject);
 
-    getAll().then((initialPersons) => {
-      setPersons(initialPersons);
+    const newState = persons.map((person) => {
+      // 👇️ if id equals 2 replace object
+      if (person.id === id) {
+        return personObject;
+      }
+
+      // 👇️ otherwise return object as is
+      return person;
     });
+
+    setPersons(newState);
   };
 
   // Frontend
@@ -92,7 +104,7 @@ const Phonebook = () => {
   const render = filter.map((person) => (
     <tr key={person.name}>
       <td> {person.name}</td>
-      <td> {person.phone}</td>
+      <td> {person.number}</td>
       <td>
         <Button variant="secondary" onClick={(e) => handleUpdate(person.id, e)}>
           Update
@@ -118,9 +130,12 @@ const Phonebook = () => {
 
       {/* Toggle info section */}
       <InfoToggle
-        function="uses a form to save names and phone numbers to a list. The
-            backend can be accessed by doing a cloning the project from the
-            repo:            
+        function="uses a form to save names and phone numbers 
+        to a list. Results currently only working when running
+         the backend. The backend can be accessed by cloning 
+         the project from the repo ( link on the bottom ). 
+         [ git clone ]. Then [ npm run dev ] to run frontend and 
+         backend concurrently. View backend at [ localhost:3001/persons ]            
             "
         concept="useState, useEffect, POST DELETE axios
             request, event handler, array filter, bootstrap, table"
