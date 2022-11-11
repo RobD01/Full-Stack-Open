@@ -12,6 +12,17 @@ const Resources = () => {
       {/* Intro */}
       <div className="my-4 bg-dark p-3 text-white text-center">
         <p>Here are resources that helped me learn</p>
+
+        {/* Test */}
+        <p>Commands to test: </p>
+        <p>npm run dev</p>
+
+        {/* Publish */}
+        <p> Commands to publish: </p>
+        <p>git add .</p>
+        <p>git commit -m "message"</p>
+        <p>git push</p>
+        <p>npm run deploy</p>
       </div>
 
       {/* Table */}

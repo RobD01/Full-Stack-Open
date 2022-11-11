@@ -131,26 +131,27 @@ const Phonebook = () => {
       {/* Toggle info section */}
       <InfoToggle
         function="uses a form to save names and phone numbers 
-        to a list. Results currently only working when running
-         the backend. The backend can be accessed by cloning 
-         the project from the repo ( link on the bottom ). 
-         [ git clone ]. Then [ npm run dev ] to run frontend and 
-         backend concurrently. View backend at [ localhost:3001/persons ]            
+        to a list. Persistant storage with backend services 
+        (deployed on Render). Front-end connected directed to 
+        the API hosted on Render. To add new name/number , 
+        fill out the form and click [submit]. To update 
+        name/number , fill out the form and click [update]
+        that is next to person on the list            
             "
-        concept="useState, useEffect, POST DELETE axios
-            request, event handler, array filter, bootstrap, table"
-        extra={
-          <div>
-            <Button
-              href="https://github.com/RobD01/Full-Stack-Open"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mx-auto"
-            >
-              Full Stack Open Repo
-            </Button>
-          </div>
-        }
+        concept="useState, useEffect, CRUD axios
+            request, event handler, array filter, bootstrap, table, express NodeJS"
+        // extra={
+        //   <div>
+        //     <Button
+        //       href="https://github.com/RobD01/Full-Stack-Open"
+        //       target="_blank"
+        //       rel="noopener noreferrer"
+        //       className="mx-auto"
+        //     >
+        //       Full Stack Open Repo
+        //     </Button>
+        //   </div>
+        // }
       />
 
       {/* Search bar */}
