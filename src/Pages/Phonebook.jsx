@@ -34,13 +34,15 @@ const Phonebook = () => {
       number: newPhone,
     };
 
-    create(personObject).then((returnedPerson) => {
-      setPersons(persons.concat(returnedPerson));
-      setNewName("");
-      setNewPhone("");
-    });
-
-    console.log(persons);
+    if (!personObject.name || !personObject.number) {
+      alert("Error: missing name or number");
+    } else {
+      create(personObject).then((returnedPerson) => {
+        setPersons(persons.concat(returnedPerson));
+        setNewName("");
+        setNewPhone("");
+      });
+    }
   };
 
   // Delete request on backend, and delete name from frontend table
@@ -60,19 +62,23 @@ const Phonebook = () => {
       number: newPhone,
     };
 
-    update(id, personObject);
+    if (!personObject.name || !personObject.number) {
+      alert("Error: missing name or number");
+    } else {
+      update(id, personObject);
 
-    const newState = persons.map((person) => {
-      // 👇️ if id equals 2 replace object
-      if (person.id === id) {
-        return personObject;
-      }
+      const newState = persons.map((person) => {
+        // 👇️ if id equals 2 replace object
+        if (person.id === id) {
+          return personObject;
+        }
 
-      // 👇️ otherwise return object as is
-      return person;
-    });
+        // 👇️ otherwise return object as is
+        return person;
+      });
 
-    setPersons(newState);
+      setPersons(newState);
+    }
   };
 
   // Frontend
