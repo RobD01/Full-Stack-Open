@@ -36,12 +36,19 @@ const Phonebook = () => {
 
     if (!personObject.name || !personObject.number) {
       alert("Error: missing name or number");
+    } else if (isNaN(personObject.number)) {
+      alert("Error: phone number can only be numbers");
     } else {
       create(personObject).then((returnedPerson) => {
         setPersons(persons.concat(returnedPerson));
         setNewName("");
         setNewPhone("");
       });
+    }
+
+    const nameList = ["andrew", "anthony", "alex", "steven"];
+    if (nameList.includes(personObject.name.toLowerCase())) {
+      alert("That's a dumb name!");
     }
   };
 
@@ -64,6 +71,8 @@ const Phonebook = () => {
 
     if (!personObject.name || !personObject.number) {
       alert("Error: missing name or number");
+    } else if (isNaN(personObject.number)) {
+      alert("Error: phone number can only be numbers");
     } else {
       update(id, personObject);
 
