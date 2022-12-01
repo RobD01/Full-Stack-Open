@@ -24,7 +24,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "server": "json-server -p3001 --watch db.json",
-    "dev": "concurrently \"cd ../Full-Stack-Open-Backend && npm run server\" \"npm start\" "
+    "dev": "concurrently \"cd ../Full-Stack-Open-Backend-Blog && npm run server\" \"npm start\" "
   },
   "eslintConfig": {
     "extends": [

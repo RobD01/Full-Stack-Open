@@ -6,7 +6,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Navigation from "../Components/Navbar";
 import { getAll, create, update, deleteItem } from "../services/phonebook.js";
 import InfoToggle from "../Components/InfoToggle";
-import { phonebookUrl } from "../services/url";
 
 const Phonebook = () => {
   // States
@@ -16,8 +15,6 @@ const Phonebook = () => {
   const [search, setSearch] = useState("");
 
   // Backend
-
-  const apiurl = phonebookUrl;
 
   useEffect(() => {
     getAll().then((initialPersons) => {

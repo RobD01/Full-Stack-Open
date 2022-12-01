@@ -2,6 +2,7 @@ import React from "react";
 
 import { HashRouter, Routes, Route } from "react-router-dom";
 import CourseList from "./Pages/CourseList";
+import Blog from "./Pages/Blog";
 import Phonebook from "./Pages/Phonebook";
 import Home from "./Pages/Home";
 import Country from "./Pages/Country";
@@ -13,6 +14,7 @@ const App = () => {
       <Routes>
         <Route path="/">
           <Route index element={<Home />} />
+          <Route path="blog" element={<Blog />} />
           <Route path="phonebook" element={<Phonebook />} />
           <Route path="courselist" element={<CourseList />} />
           <Route path="country" element={<Country />} />

@@ -41,23 +41,26 @@ const Resources = () => {
               <a
                 target="_blank"
                 href="https://stackoverflow.com/questions/64537681/run-node-react-concurrently-in-separate-folders"
+                rel="noreferrer"
               >
                 Concurrent run dev
               </a>
             </td>
             <td> Concurrently run front and back end from different folder</td>
           </tr>
-          {/* Firebase Deploy */}
+
+          {/* Access state from another component */}
           <tr>
             <td>
               <a
                 target="_blank"
-                href="https://firebase.google.com/docs/cli#sign-in-test-cli"
+                href="https://www.geeksforgeeks.org/how-to-send-state-props-to-another-component-in-react-with-onclick/"
+                rel="noreferrer"
               >
-                Firebase deploy
+                Component State
               </a>
             </td>
-            <td>Deploy the backend to Firebase</td>
+            <td>State from another component</td>
           </tr>
         </tbody>
       </table>

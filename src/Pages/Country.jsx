@@ -43,7 +43,6 @@ const Country = () => {
   );
 
   // Country Specific Data
-  const datashow = show ? "d-block" : "d-none";
 
   const buttonHide = filter.length === 1 ? "d-block" : "d-none";
 
