@@ -13,6 +13,7 @@ import {
   setToken,
 } from "../services/blog.js";
 import login from "../services/login";
+import signup from "../services/signup";
 
 const Blog = () => {
   // States ####
@@ -28,8 +29,18 @@ const Blog = () => {
   const [user, setUser] = useState(null);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loginFormDisplay, setLoginFormDisplay] = useState("");
+
+  // Sign Up Form
+  const [name, setName] = useState("");
+  const [signupFormDisplay, setSignupFormDisplay] = useState("");
 
   // Forms handler #####
+
+  // Signup
+  const handleName = (event) => {
+    setName(event.target.value);
+  };
 
   // Login
   const handleUsername = (event) => {
@@ -126,6 +137,28 @@ const Blog = () => {
 
   // Backend  #####
 
+  // Sign up user
+  const handleSignUp = async (event) => {
+    event.preventDefault();
+
+    try {
+      const user = await signup({
+        username,
+        name,
+        password,
+      });
+      window.localStorage.setItem("loggedBlogUser", JSON.stringify(user));
+      setToken(user.token);
+      setUser(user);
+      setUsername("");
+      setPassword("");
+    } catch (exception) {
+      alert("Wrong credentials");
+      setTimeout(() => {}, 1000);
+    }
+    console.log("handleSignUp complete", name, username, password);
+  };
+
   // Log in user
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -170,6 +203,49 @@ const Blog = () => {
   }, []);
 
   // Front end #####
+
+  const signUpForm = () => {
+    return (
+      <Form className="my-5" onSubmit={handleSignUp}>
+        <h5>Sign Up</h5>
+        <Form.Group className="mb-3">
+          <Form.Label>Username</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter username"
+            value={username}
+            onChange={handleUsername}
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label>Name</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter name"
+            value={name}
+            onChange={handleName}
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter password"
+            value={password}
+            onChange={handlePassword}
+          />
+        </Form.Group>
+
+        <div>
+          <Button variant="primary" type="submit" onClick={handleSignUp}>
+            Sign Up
+          </Button>
+        </div>
+      </Form>
+    );
+  };
 
   const blogForm = () => {
     return (
@@ -266,30 +342,48 @@ const Blog = () => {
     );
   };
 
-  const render = !user
-    ? null
-    : blogList.map((blog) => (
-        <tr key={blog.title}>
-          <td> {blog.title}</td>
-          <td> {blog.author}</td>
-          <td>
-            <Button
-              variant="secondary"
-              onClick={(e) => handleUpdate(blog.id, e)}
-            >
-              Update
-            </Button>
-          </td>
-          <td>
-            <Button
-              variant="danger"
-              onClick={(e) => handleDelete(blog.id, blog.name, e)}
-            >
-              Delete
-            </Button>
-          </td>
-        </tr>
-      ));
+  const render = blogList.map((blog) => (
+    <tr key={blog.title}>
+      <td> {blog.title}</td>
+      <td> {blog.author}</td>
+      <td>
+        <Button variant="secondary" onClick={(e) => handleUpdate(blog.id, e)}>
+          Update
+        </Button>
+      </td>
+      <td>
+        <Button
+          variant="danger"
+          onClick={(e) => handleDelete(blog.id, blog.name, e)}
+        >
+          Delete
+        </Button>
+      </td>
+    </tr>
+  ));
+
+  // Display signup form or login form
+  const handleSignupForm = () => {
+    setSignupFormDisplay(!signupFormDisplay);
+    setLoginFormDisplay(false);
+  };
+
+  const handleLoginForm = () => {
+    setLoginFormDisplay(!loginFormDisplay);
+    setSignupFormDisplay(false);
+  };
+
+  // Display on logged or logged in
+  const listDisplay = user ? "d-block" : "d-none";
+  const formDisplay = user ? "d-block" : "d-none";
+  const loginDisplay = !user && loginFormDisplay ? "d-block" : "d-none";
+  const signupDisplay = !user && signupFormDisplay ? "d-block" : "d-none";
+
+  // Display intro
+  const introDisplay =
+    "bg-dark color text-light m-5" + user ? "d-none" : "d-block";
+
+  const introButtonDisplay = "d-flex justify-content-around w-50 mx-auto";
 
   return (
     <div className="container">
@@ -304,33 +398,48 @@ const Blog = () => {
 
             "
         concept="CRUD axios request, JWT token authentication"
-        extra="Sample accounts: [username]: pikachu , [password]: password 
-         ..... [username]: mewtwo, [password]: password"
       />
+
       {/* Forms */}
-      {!user ? (
-        loginForm()
-      ) : (
-        <div>
-          <h2>Welcome {user.name}</h2>
-          <Button variant="primary" onClick={handleLogout}>
-            Log out
-          </Button>
-          {blogForm()}
-        </div>
-      )}
+
+      <div className={introButtonDisplay}>
+        <Button onClick={handleLoginForm}>Log in</Button>
+        <Button onClick={handleSignupForm}>Sign up</Button>
+      </div>
+
+      <div className={signupDisplay}>{signUpForm()}</div>
+      <div className={loginDisplay}>{loginForm()}</div>
+      <div className={formDisplay}>
+        <h2>Welcome {!user ? null : user.name}</h2>
+        <Button variant="primary" onClick={handleLogout}>
+          Log out
+        </Button>
+        {blogForm()}
+      </div>
 
       {/* Table results */}
-      <h3>Blog Posts</h3>
-      <table className="table">
-        <thead>
-          <tr>
-            <th scope="col">Title</th>
-            <th scope="col">Author</th>
-          </tr>
-        </thead>
-        <tbody>{render}</tbody>
-      </table>
+      <div className={listDisplay}>
+        <h3>Blog Posts</h3>
+        <table className="table">
+          <thead>
+            <tr>
+              <th scope="col">Title</th>
+              <th scope="col">Author</th>
+            </tr>
+          </thead>
+          <tbody>{render}</tbody>
+        </table>
+      </div>
+      <div className={introDisplay}>
+        <p>Sample accounts to log in: </p>
+        <p>[username]: pikachu , [password]: password</p>
+        <p>[username]: mewtwo, [password]: password</p>
+        <p>
+          {" "}
+          If you register, please log out, then log back in. To get the token
+          auth and use the blog form{" "}
+        </p>
+      </div>
     </div>
   );
 };

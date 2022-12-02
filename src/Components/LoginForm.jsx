@@ -5,10 +5,6 @@ import { useState, useEffect } from "react";
 import loginService from "../services/login";
 
 const LoginForm = (props) => {
-  const [user, setUser] = useState(null);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-
   // Log in user
   const handleLogin = async (event) => {
     event.preventDefault();
