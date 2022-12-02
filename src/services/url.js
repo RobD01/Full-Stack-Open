@@ -1,5 +1,5 @@
 // Change whether we're in testing (true) or production (false) build.
-const dev = true;
+const dev = false;
 
 const base = dev
   ? "http://localhost:3001/api/"
