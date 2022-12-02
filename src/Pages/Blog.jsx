@@ -15,7 +15,7 @@ import {
 import login from "../services/login";
 
 const Blog = () => {
-  // States
+  // States ####
 
   // Blog Form
   const [blogList, setBlogList] = useState([]);
@@ -299,11 +299,13 @@ const Blog = () => {
       {/* Toggle info section */}
       <InfoToggle
         function="User login with token authentication (using JWT). 
-        Persistant storage with backend services (deployed on Render). Front-end connected directed to 
-        the API hosted on Render. First log in,
-        and then you can post/edit/delete blog posts            
+        Persistant storage with backend services (deployed on Render). 
+        First log in, then you can post/edit/delete blog posts.
+
             "
         concept="CRUD axios request, JWT token authentication"
+        extra="Sample accounts: [username]: pikachu , [password]: password 
+         ..... [username]: mewtwo, [password]: password"
       />
       {/* Forms */}
       {!user ? (
