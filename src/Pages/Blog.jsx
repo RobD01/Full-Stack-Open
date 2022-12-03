@@ -14,6 +14,10 @@ import {
 } from "../services/blog.js";
 import login from "../services/login";
 import signup from "../services/signup";
+import LoginForm from "../Components/LoginForm";
+import BlogForm from "../Components/BlogForm";
+import SignupForm from "../Components/SignupForm";
+import Togglable from "../Components/Togglable ";
 
 const Blog = () => {
   // States ####
@@ -152,9 +156,8 @@ const Blog = () => {
       setUser(user);
       setUsername("");
       setPassword("");
-    } catch (exception) {
-      alert("Wrong credentials");
-      setTimeout(() => {}, 1000);
+    } catch (error) {
+      alert(error);
     }
     console.log("handleSignUp complete", name, username, password);
   };
@@ -173,9 +176,8 @@ const Blog = () => {
       setUser(user);
       setUsername("");
       setPassword("");
-    } catch (exception) {
-      alert("Wrong credentials");
-      setTimeout(() => {}, 1000);
+    } catch (error) {
+      alert(error);
     }
     console.log("handleLogin complete", username, password);
   };
@@ -204,141 +206,46 @@ const Blog = () => {
 
   // Front end #####
 
-  const signUpForm = () => {
+  const signupForm = () => {
     return (
-      <Form className="my-5" onSubmit={handleSignUp}>
-        <h5>Sign Up</h5>
-        <Form.Group className="mb-3">
-          <Form.Label>Username</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter username"
-            value={username}
-            onChange={handleUsername}
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3">
-          <Form.Label>Name</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter name"
-            value={name}
-            onChange={handleName}
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter password"
-            value={password}
-            onChange={handlePassword}
-          />
-        </Form.Group>
-
-        <div>
-          <Button variant="primary" type="submit" onClick={handleSignUp}>
-            Sign Up
-          </Button>
-        </div>
-      </Form>
+      <SignupForm
+        username={username}
+        name={name}
+        password={password}
+        handleUsername={({ target }) => setUsername(target.value)}
+        handleName={({ target }) => setName(target.value)}
+        handlePassword={({ target }) => setPassword(target.value)}
+        handleSignUp={handleSignUp}
+      />
     );
   };
 
   const blogForm = () => {
     return (
-      <Form className="my-5">
-        <h5>Add New Post</h5>
-
-        <Form.Group className="mb-3">
-          <Form.Label>Title</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter title"
-            value={title}
-            onChange={handleTitle}
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3">
-          <Form.Label>Author</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter author"
-            value={author}
-            onChange={handleAuthor}
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3">
-          <Form.Label>URL</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter URL"
-            value={url}
-            onChange={handleUrl}
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3">
-          <Form.Label>Likes</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter Likes"
-            value={likes}
-            onChange={handleLikes}
-          />
-        </Form.Group>
-
-        <div>
-          <Button variant="primary" type="submit" onClick={addBlog}>
-            Submit
-          </Button>
-          <Button
-            variant="warning"
-            className="mx-5"
-            type="submit"
-            onClick={handleClear}
-          >
-            Clear
-          </Button>
-        </div>
-      </Form>
+      <BlogForm
+        title={title}
+        author={author}
+        url={url}
+        likes={likes}
+        handleTitle={({ target }) => setTitle(target.value)}
+        handleAuthor={({ target }) => setAuthor(target.value)}
+        handleUrl={({ target }) => setUrl(target.value)}
+        handleLikes={({ target }) => setLikes(target.value)}
+        addBlog={addBlog}
+        handleClear={handleClear}
+      />
     );
   };
 
   const loginForm = () => {
     return (
-      <Form className="my-5" onSubmit={handleLogin}>
-        <h5>Log in</h5>
-        <Form.Group className="mb-3">
-          <Form.Label>Username</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter username"
-            value={username}
-            onChange={handleUsername}
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter password"
-            value={password}
-            onChange={handlePassword}
-          />
-        </Form.Group>
-
-        <div>
-          <Button variant="primary" type="submit" onClick={handleLogin}>
-            Log in
-          </Button>
-        </div>
-      </Form>
+      <LoginForm
+        username={username}
+        password={password}
+        handleUsername={({ target }) => setUsername(target.value)}
+        handlePassword={({ target }) => setPassword(target.value)}
+        handleLogin={handleLogin}
+      />
     );
   };
 
@@ -373,17 +280,18 @@ const Blog = () => {
     setSignupFormDisplay(false);
   };
 
-  // Display on logged or logged in
+  // Display on logged out or logged in
   const listDisplay = user ? "d-block" : "d-none";
-  const formDisplay = user ? "d-block" : "d-none";
+  const formDisplay = user ? "w-100 mx-auto" : "d-none";
   const loginDisplay = !user && loginFormDisplay ? "d-block" : "d-none";
   const signupDisplay = !user && signupFormDisplay ? "d-block" : "d-none";
 
   // Display intro
-  const introDisplay =
-    "bg-dark color text-light m-5" + user ? "d-none" : "d-block";
+  const introDisplay = user ? "d-none" : "bg-dark color text-light m-5";
 
-  const introButtonDisplay = "d-flex justify-content-around w-50 mx-auto";
+  const introButtonDisplay = user
+    ? "d-none "
+    : "d-flex justify-content-around w-50 mx-auto";
 
   return (
     <div className="container">
@@ -407,28 +315,45 @@ const Blog = () => {
         <Button onClick={handleSignupForm}>Sign up</Button>
       </div>
 
-      <div className={signupDisplay}>{signUpForm()}</div>
+      <div className={signupDisplay}>{signupForm()}</div>
       <div className={loginDisplay}>{loginForm()}</div>
       <div className={formDisplay}>
-        <h2>Welcome {!user ? null : user.name}</h2>
-        <Button variant="primary" onClick={handleLogout}>
-          Log out
-        </Button>
-        {blogForm()}
+        <div className="text-center">
+          <h4>Welcome {!user ? null : user.name}</h4>
+          <Button variant="primary" onClick={handleLogout}>
+            Log out
+          </Button>
+        </div>
+        <Togglable buttonLabel="Add Blog Post">
+          <BlogForm
+            title={title}
+            author={author}
+            url={url}
+            likes={likes}
+            handleTitle={({ target }) => setTitle(target.value)}
+            handleAuthor={({ target }) => setAuthor(target.value)}
+            handleUrl={({ target }) => setUrl(target.value)}
+            handleLikes={({ target }) => setLikes(target.value)}
+            addBlog={addBlog}
+            handleClear={handleClear}
+          />
+        </Togglable>
       </div>
 
       {/* Table results */}
       <div className={listDisplay}>
-        <h3>Blog Posts</h3>
-        <table className="table">
-          <thead>
-            <tr>
-              <th scope="col">Title</th>
-              <th scope="col">Author</th>
-            </tr>
-          </thead>
-          <tbody>{render}</tbody>
-        </table>
+        <Togglable buttonLabel="View Blog List">
+          <h3>Blog Posts</h3>
+          <table className="table">
+            <thead>
+              <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Author</th>
+              </tr>
+            </thead>
+            <tbody>{render}</tbody>
+          </table>
+        </Togglable>
       </div>
       <div className={introDisplay}>
         <p>Sample accounts to log in: </p>

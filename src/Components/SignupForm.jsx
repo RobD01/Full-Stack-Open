@@ -2,16 +2,18 @@ import React from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
-const LoginForm = ({
-  handleLogin,
-  handleUsername,
-  handlePassword,
+const SignupForm = ({
   username,
+  name,
   password,
+  handleUsername,
+  handleName,
+  handlePassword,
+  handleSignUp,
 }) => {
   return (
-    <Form className="my-5" onSubmit={handleLogin}>
-      <h5>Log in</h5>
+    <Form className="my-5" onSubmit={handleSignUp}>
+      <h5>Sign Up</h5>
       <Form.Group className="mb-3">
         <Form.Label>Username</Form.Label>
         <Form.Control
@@ -19,6 +21,16 @@ const LoginForm = ({
           placeholder="Enter username"
           value={username}
           onChange={handleUsername}
+        />
+      </Form.Group>
+
+      <Form.Group className="mb-3">
+        <Form.Label>Name</Form.Label>
+        <Form.Control
+          type="text"
+          placeholder="Enter name"
+          value={name}
+          onChange={handleName}
         />
       </Form.Group>
 
@@ -33,12 +45,12 @@ const LoginForm = ({
       </Form.Group>
 
       <div>
-        <Button variant="primary" type="submit" onClick={handleLogin}>
-          Log in
+        <Button variant="primary" type="submit" onClick={handleSignUp}>
+          Sign Up
         </Button>
       </div>
     </Form>
   );
 };
 
-export default LoginForm;
+export default SignupForm;
