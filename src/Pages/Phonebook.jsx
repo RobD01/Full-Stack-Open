@@ -50,7 +50,7 @@ const Phonebook = () => {
   };
 
   // Delete request on backend, and delete name from frontend table
-  const handleDelete = (id, name) => {
+  const handleDelete = (id) => {
     deleteItem(id);
     setPersons(
       persons.filter((person) => {
@@ -142,13 +142,13 @@ const Phonebook = () => {
 
       {/* Toggle info section */}
       <InfoToggle
-        function="uses a form to save names and phone numbers 
-        to a list. Persistant storage with backend services 
-        (deployed on Render). Front-end connected directed to 
-        the API hosted on Render. To add new name/number , 
-        fill out the form and click [submit]. To update 
+        function="uses a form to save names and phone numbers
+        to a list. Persistant storage with backend services
+        (deployed on Render). Front-end connected directed to
+        the API hosted on Render. To add new name/number ,
+        fill out the form and click [submit]. To update
         name/number , fill out the form and click [update]
-        that is next to person on the list            
+        that is next to person on the list
             "
         concept="useState, useEffect, CRUD axios
             request, event handler, array filter, bootstrap, table, express NodeJS"

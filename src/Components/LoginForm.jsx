@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import React from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -19,6 +20,7 @@ const LoginForm = ({
           placeholder="Enter username"
           value={username}
           onChange={handleUsername}
+          name="Username"
         />
       </Form.Group>
 
@@ -29,16 +31,30 @@ const LoginForm = ({
           placeholder="Enter password"
           value={password}
           onChange={handlePassword}
+          name="Password"
         />
       </Form.Group>
 
       <div>
-        <Button variant="primary" type="submit" onClick={handleLogin}>
+        <Button
+          variant="primary"
+          type="submit"
+          onClick={handleLogin}
+          name="Log in"
+        >
           Log in
         </Button>
       </div>
     </Form>
   );
+};
+
+LoginForm.propTypes = {
+  handleLogin: PropTypes.func.isRequired,
+  handleUsername: PropTypes.func.isRequired,
+  handlePassword: PropTypes.func.isRequired,
+  username: PropTypes.string.isRequired,
+  password: PropTypes.string.isRequired,
 };
 
 export default LoginForm;

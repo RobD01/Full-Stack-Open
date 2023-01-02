@@ -34,7 +34,7 @@ const Country = () => {
     setSearch(event.target.value.toLowerCase());
   };
 
-  const handleClick = (event) => {
+  const handleClick = () => {
     setShow(!show);
   };
 

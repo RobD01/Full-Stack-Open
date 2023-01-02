@@ -20,7 +20,7 @@ const Resources = () => {
         {/* Publish */}
         <p> Commands to publish: </p>
         <p>git add .</p>
-        <p>git commit -m "message"</p>
+        <p>git commit -m </p>
         <p>git push</p>
         <p>npm run deploy</p>
       </div>

@@ -1,10 +1,10 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navigation from "../Components/Navbar";
 import InfoToggle from "../Components/InfoToggle";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   getAll,
   create,
@@ -20,8 +20,6 @@ import SignupForm from "../Components/SignupForm";
 import Togglable from "../Components/Togglable ";
 
 const Blog = () => {
-  // States ####
-
   // Blog Form
   const [blogList, setBlogList] = useState([]);
   const [title, setTitle] = useState("");
@@ -39,20 +37,12 @@ const Blog = () => {
   const [name, setName] = useState("");
   const [signupFormDisplay, setSignupFormDisplay] = useState("");
 
+  // Error Alert
+  const [alert, setAlert] = useState("");
+
   // Forms handler #####
 
   // Signup
-  const handleName = (event) => {
-    setName(event.target.value);
-  };
-
-  // Login
-  const handleUsername = (event) => {
-    setUsername(event.target.value);
-  };
-  const handlePassword = (event) => {
-    setPassword(event.target.value);
-  };
 
   // Post request on backend, and adding name into frontend table
   const addBlog = (event) => {
@@ -65,10 +55,10 @@ const Blog = () => {
       likes,
     };
 
+    blogFormRef.current.toggleVisibility();
+
     if (!blogObject.title) {
       alert("Error: missing title");
-    } else if (isNaN(blogObject.likes)) {
-      alert("Error: Likes can only be numbers");
     } else {
       create(blogObject).then((returnedItem) => {
         setBlogList(blogList.concat(returnedItem));
@@ -78,21 +68,9 @@ const Blog = () => {
   };
 
   // Add new post
-  const handleTitle = (event) => {
-    setTitle(event.target.value);
-  };
-  const handleAuthor = (event) => {
-    setAuthor(event.target.value);
-  };
-  const handleUrl = (event) => {
-    setUrl(event.target.value);
-  };
-  const handleLikes = (event) => {
-    setLikes(event.target.value);
-  };
 
   // Clear Form
-  const handleClear = (event) => {
+  const handleClear = () => {
     setTitle("");
     setAuthor("");
     setUrl("");
@@ -100,7 +78,7 @@ const Blog = () => {
   };
 
   // Delete request on backend, and delete name from frontend table
-  const handleDelete = (id, name) => {
+  const handleDelete = (id) => {
     deleteItem(id);
     setBlogList(
       blogList.filter((blog) => {
@@ -177,7 +155,7 @@ const Blog = () => {
       setUsername("");
       setPassword("");
     } catch (error) {
-      alert(error);
+      setAlert("Incorrect Log in");
     }
     console.log("handleLogin complete", username, password);
   };
@@ -220,22 +198,7 @@ const Blog = () => {
     );
   };
 
-  const blogForm = () => {
-    return (
-      <BlogForm
-        title={title}
-        author={author}
-        url={url}
-        likes={likes}
-        handleTitle={({ target }) => setTitle(target.value)}
-        handleAuthor={({ target }) => setAuthor(target.value)}
-        handleUrl={({ target }) => setUrl(target.value)}
-        handleLikes={({ target }) => setLikes(target.value)}
-        addBlog={addBlog}
-        handleClear={handleClear}
-      />
-    );
-  };
+  const blogFormRef = useRef();
 
   const loginForm = () => {
     return (
@@ -252,7 +215,12 @@ const Blog = () => {
   const render = blogList.map((blog) => (
     <tr key={blog.title}>
       <td> {blog.title}</td>
-      <td> {blog.author}</td>
+      <td> {blog.userId.username}</td>
+      <td> {blog.likes}</td>
+      <td> {blog.url}</td>
+      <td>
+        <Button variant="warning">Like</Button>
+      </td>
       <td>
         <Button variant="secondary" onClick={(e) => handleUpdate(blog.id, e)}>
           Update
@@ -262,6 +230,7 @@ const Blog = () => {
         <Button
           variant="danger"
           onClick={(e) => handleDelete(blog.id, blog.name, e)}
+          name="Delete"
         >
           Delete
         </Button>
@@ -281,8 +250,16 @@ const Blog = () => {
   };
 
   // Display on logged out or logged in
-  const listDisplay = user ? "d-block" : "d-none";
-  const formDisplay = user ? "w-100 mx-auto" : "d-none";
+
+  const alertDisplay = !user
+    ? "d-block bg-success bg-opacity-25 m-1 text-center"
+    : "d-none";
+  const listDisplay = user
+    ? "d-block bg-success bg-opacity-25 m-1 text-center"
+    : "d-none";
+  const formDisplay = user
+    ? "w-100 mx-auto bg-info bg-opacity-25 m-3 text-center"
+    : "d-none";
   const loginDisplay = !user && loginFormDisplay ? "d-block" : "d-none";
   const signupDisplay = !user && signupFormDisplay ? "d-block" : "d-none";
 
@@ -300,8 +277,8 @@ const Blog = () => {
       <h2 className="text-center">Blog App</h2>
       {/* Toggle info section */}
       <InfoToggle
-        function="User login with token authentication (using JWT). 
-        Persistant storage with backend services (deployed on Render). 
+        function="User login with token authentication (using JWT).
+        Persistant storage with backend services (deployed on Render).
         First log in, then you can post/edit/delete blog posts.
 
             "
@@ -311,20 +288,35 @@ const Blog = () => {
       {/* Forms */}
 
       <div className={introButtonDisplay}>
-        <Button onClick={handleLoginForm}>Log in</Button>
+        <Button onClick={handleLoginForm} name="intro log in">
+          Log in
+        </Button>
         <Button onClick={handleSignupForm}>Sign up</Button>
       </div>
 
       <div className={signupDisplay}>{signupForm()}</div>
       <div className={loginDisplay}>{loginForm()}</div>
+
+      {/* Log in Alert */}
+      <div className={alertDisplay}>
+        <h3>{alert}</h3>
+      </div>
+
+      {/* Welcome User */}
+      <div className={listDisplay}>
+        <h4>Welcome {!user ? null : user.name}</h4>
+        <Button variant="primary" onClick={handleLogout}>
+          Log out
+        </Button>
+      </div>
+
+      {/* Form */}
       <div className={formDisplay}>
-        <div className="text-center">
-          <h4>Welcome {!user ? null : user.name}</h4>
-          <Button variant="primary" onClick={handleLogout}>
-            Log out
-          </Button>
-        </div>
-        <Togglable buttonLabel="Add Blog Post">
+        <Togglable
+          buttonLabel="Add Blog Post"
+          ref={blogFormRef}
+          id="AddBlogPost"
+        >
           <BlogForm
             title={title}
             author={author}
@@ -348,7 +340,9 @@ const Blog = () => {
             <thead>
               <tr>
                 <th scope="col">Title</th>
-                <th scope="col">Author</th>
+                <th scope="col">Username</th>
+                <th scope="col">Likes</th>
+                <th scope="col">Post Body</th>
               </tr>
             </thead>
             <tbody>{render}</tbody>
